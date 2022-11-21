@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        background-color: lightcoral;
+    }
+    #game{
+        background-color: lightblue;
+        color: white;
+        margin: auto auto;
+        padding: 15px;
+        width: 30%;
+        text-align: center;
+        border-radius: 20px;
+        border: 1px solid black;
+    }
+    h1{
+        border: 1px solid white;
+        padding: 5px 0;
+    }
+    span{
+        padding: 10px;
+        font-size: 25px;
+        font-weight: 600;
+    }
+    #result{
+        width: 90px;
+        margin: 15px;
+        height: 20px;
+    }
+    #answer{
+        background-color: darkcyan;
+        color: white;
+        border: none;
+        width: 100px;
+        padding: 5px;
+    }
+    #answer:hover{
+        background-color: darkolivegreen;
+    }
+
+    #True{
+        font-size: 150%;
+        padding: 10px;
+        margin-top: 10px;
+        display: inline-block;
+        background-color: green;
+    }
+    #False{
+        font-size: 150%;
+        padding: 10px;
+        margin-top: 10px;
+        display: inline-block;
+        background-color: red;
+    }
+</style>
+<body>
+    <div id="game">
+        <h1>Dört İşlem Oyunu</h1>
+        <span id="number1">0</span>
+        <span id="operator">*</span>
+        <span id="number2">0</span>
+        <span>=</span>
+        <input type="text" id="result">
+        <input type="button" id="answer" value="CEVAPLA">
+        <div style="clear: both;"></div>
+        <div id="True">0</div>
+        <div id="False">0</div>
+        <div style="clear: both;"></div>
+    </div>
+    <script>
+        var number1,number2,operator,result,answer,True=0,False=0;
+
+            number1=document.querySelector("#number1");
+            number2=document.querySelector("#number2");
+            operator=document.querySelector("#operator");
+            result=document.querySelector("#result");
+            answer=document.querySelector("#answer");
+            True=document.querySelector("#True");
+            False=document.querySelector("#False");
+
+            function RandomNumber(min,max){
+                let number=Math.floor(Math.random()*(max-min))+min;
+                return number;
+            }
+
+            function newQuestion(){
+                let operation=["+","-","/","*"];
+                operator.textContent=operation[RandomNumber(0,4)];
+                number1.textContent=RandomNumber(0,50);
+                number2.textContent=RandomNumber(0,50);
+
+                if(operator.textContent=="/"){
+                    while(true){
+                        number2.textContent=RandomNumber(0,50);
+                        if(number1.textContent % number2.textContent==0){
+                            break;
+                        }
+                    }
+                }
+            }
+            window.onload=function(){
+                newQuestion();
+            }
+
+            answer.onclick=function(){
+                let n1,n2,ans;
+                n1=Number(number1.textContent)
+                n2=Number(number2.textContent)
+
+                switch(operator.textContent){
+                    case "+":ans=n1+n2;break;
+                    case "-":ans=n1-n2;break;
+                    case "/":ans=n1/n2;break;
+                    case "*":ans=n1*n2;break;
+                    default:break;
+                }
+
+                if(result.value==ans){
+                    True.textContent=Number(True.textContent)+1;
+
+                }else{
+                    False.textContent=Number(False.textContent)+1;
+                }
+                newQuestion();
+            }
+    </script>
+    
+</body>
+</html>
